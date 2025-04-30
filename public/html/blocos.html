@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Gerenciar Blocos</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Gerenciamento de Blocos</h1>
+        <nav>
+            <a href="home.html">Início</a> |
+            <a href="apartamentos.html">Apartamentos</a> |
+            <a href="moradores.html">Moradores</a> |
+            <a href="pagamentos.html">Pagamentos</a> |
+            <a href="manutencoes.html">Manutenções</a>
+        </nav>
+    </header>
+
+    <main>
+
+        <section id="pesquisa-blocos">
+            <h2>Pesquisar Blocos</h2>
+            <input type="text" id="pesquisaInput" placeholder="Digite o nome do bloco">
+            <button type="submit">Pesquisar</button>
+            <button type="submit">Novo bloco</button>
+            <a href="/listarBlocos">listar</a>
+            
+            
+        </section>
+
+        <section id="lista-blocos">
+            <h2>Lista de Blocos</h2>
+            <tablE>
+                <thead>
+                    <tr>
+                        <th>Nome do Bloco</th>
+                        <th>Quantidade de Apartamentos</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="tabelaBlocos">
+                
+                </tbody>
+            </table>
+        </section>
+
+        <section id="formulario-bloco" style="display: none;">
+            <h2 id="tituloFormulario">Cadastrar Novo Bloco</h2>
+            <form id="blocoForm">
+                <label for="nomeBloco">Nome do Bloco:</label>
+                <input type="text" id="nomeBloco" name="nomeBloco" required><br><br>
+
+                <label for="qntdApartamento">Quantidade de Apartamentos:</label>
+                <input type="number" id="qntdApartamento" name="qntdApartamento" required><br><br>
+
+                <button type="submit">Salvar</button>
+                
+            </form>
+        </section>
+
+    </main>
+
+
+</body>
+</html>
