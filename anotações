@@ -1,0 +1,38 @@
+Blocos precisa ter:
+Id bloco = AI
+nome = nome do bloco, A B ou C
+qntd apartemntos = soma de apartemtno por bloco
+ações = excluir e editar
+
+
+Apartamento:
+IdBloco = chave estrangeira
+NumeroAp = int
+ações = excluir e editar
+
+Morador:
+Cpf = varchar
+NomeMorador = varchar
+NumeroMorador = int
+NumeroAp = chave estrangeira
+IdBloco = chave estrangeira
+ações = excluir e editar
+
+Pagamento:
+IdAp = chave estrangeira, não deve permitir ap não cadastrado
+Cpf = chave estrangeira usando o join
+idMorador = chave estrangeira
+NomeMorador = nome
+mes/ano = date
+valor = decimal
+vencimento = data
+
+manuntencao
+TipoDeManutencao = ex pintura
+data da manuntencao = date
+local, ou lugar = varchar
+
+
+
+
+
