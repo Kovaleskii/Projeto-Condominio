@@ -36,3 +36,139 @@ local, ou lugar = varchar
 
 
 
+
+Feito hoje, so preciso ajeitar a questao da tabela nomeBloco  esse é o erro
+
+sqlState: '42S22',
+  sqlMessage: "Unknown column 'nomeBloco' in 'field list'",
+  sql: "insert into Apartamentos (nomeBloco,numeroDoAp) values (NULL, '101')"
+}
+
+
+= if(!err){
+    res.send(`
+        <!DOCTYPE html>
+        <html lang="pt-BR">
+        <head>
+            <meta charset="UTF-8">
+            <title>Relatório de Pesquisa</title>
+            <link rel="stylesheet" href="css/style.css">
+        </head>
+        <body> 
+            <header>
+                <h1>Gerenciamento de Moradores</h1>
+                <nav>
+                    <a href="/">Início</a> |
+                    <a href="/blocos">Blocos</a> |
+                    <a href="/apartamentos">Apartamentos</a> |
+                    <a href="pagamentos.html">Pagamentos</a> |
+                    <a href="manutencoes.html">Manutenções</a>
+                </nav>
+            </header>
+
+            <main>
+                
+                    <h2>Pesquisar Apartamentos</h2>
+
+                <form action="/pesquisarMoradores" method="POST">
+                <input type="text" name="pesquisarMorador" id="pesquisarMorador" placeholder="Digite o nome do morador ">
+                <button type="submit">Pesquisar</button>
+                </form>
+
+                <form action="/cadastrarMoradores" method="GET">
+                <button type="submit"> Novo Morador</a></button>
+                </form>
+
+                <section id="lista-moradores">
+                    <h2>Lista de Moradores</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>CPF</th>
+                                <th>Morador</th>
+                                <th>Bloco</th>
+                                <th>Numero Do Apartamento</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${rows.map(row => `
+                                <tr>
+                                    <td>${row.cpfMorador}</td>
+                                    <td>${row.nomeMorador}</td>
+                                    <td>${row.nomeBloco}</td>
+                                    <td>${row.numeroDoAp}</td>
+                                    <td>
+                                        <a href="/excluirMoradores/${row.idMorador}">Remover</a>
+                                        <a href="/editarMoradores/${row.idMorador}">Editar</a>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+            </main>
+
+            <footer>
+                <a href="/moradores">Voltar</a>
+            </footer>
+        </body>
+        </html>
+    `); 
+    }else{
+        console.log("Erro no cadastro ", err);
+        res.send("Erro ")
+
+    }
+})
+});
+
+
+
+
+
+app.get('/cadastrarMoradores', function(req, res) {
+    const dadosVeiculo = veiculoRows.length > 0 ? veiculoRows[0]:{placa : '', marca: '', modelo: '', vagas: '', numVaga: ''}
+        
+
+});
+})
+
+const mostrarBlocos = "select idBloco, nomeBloco from Blocos";
+const mostrarAp = "select idApartamento, numeroAp from Apartamentos where idBloco = ?";
+
+    connection.query(mostrarBlocos)
+
+
+
+
+        res.send(`
+            <!DOCTYPE html>
+            <html lang="pt-BR">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Cadastrar Morador</title>
+            </head>
+            <body>
+                <h2>Cadastrar Morador</h2>
+                <form action="/cadastrarMoradores" method="POST">
+
+                    <label for="cpfMorador">CPF:</label>
+                    <input type="text" id="cpfMorador" name="cpfMorador" required>
+
+                    <label for="nomeMorador">Nome:</label>
+                    <input type="text" id="nomeMorador" name="nomeMorador" required>
+
+                    <label for="telefoneMorador">Telefone:</label>
+                    <input type="text" id="telefoneMorador" name="telefoneMorador" required>
+
+                    <label for="numeroDoAp">Apartamento:</label>
+                    <input type="text" id="numeroDoAp" name="numeroDoAp" required>
+
+                    <button type="submit">Cadastrar</button>
+                </form>
+            </body>
+            </html>
+        `);
+
+})

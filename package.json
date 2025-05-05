@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "express": "^5.1.0",
+    "modules": "^0.4.0",
+    "mysql2": "^3.14.1",
+    "node": "^22.15.0",
+    "require": "^0.4.4"
+  }
+}
