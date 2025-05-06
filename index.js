@@ -120,6 +120,7 @@ app.get('/editar/:idBloco', function(req, res){
             res.send(`
                 <html>
                     <head>
+                    <link rel="stylesheet" href="css/style.css">
                         <title> Editar Bloco </title>
                     </head>
                     <body>
@@ -167,6 +168,7 @@ app.post('/pesquisarBlocos', function(req, res) {
                 <head>
                     <meta charset="UTF-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <link rel="stylesheet" href="css/style.css">
                     <title>Bloco Não Encontrado</title>
                 </head>
                 <body>
@@ -185,6 +187,7 @@ app.post('/pesquisarBlocos', function(req, res) {
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <link rel="stylesheet" href="css/style.css">
                 <title>Detalhes do Bloco</title>
             </head>
             <body>
@@ -381,6 +384,7 @@ app.get("/cadastrarAp", function(req, res) {
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <link rel="stylesheet" href="css/style.css">
                 <title>Cadastrar Apartamentos</title>
             </head>
             <body>
@@ -423,6 +427,7 @@ app.post('/pesquisarAp', function(req, res) {
                 <head>
                     <meta charset="UTF-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <link rel="stylesheet" href="css/style.css">
                     <title>Apartamento Não Encontrado</title>
                 </head>
                 <body>
@@ -441,6 +446,7 @@ app.post('/pesquisarAp', function(req, res) {
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <link rel="stylesheet" href="css/style.css">
                 <title>Detalhes do Bloco</title>
             </head>
             <body>
@@ -503,6 +509,7 @@ app.get('/editarAp/:idApartamento', function(req, res) {
                 <html lang="pt-BR">
                 <head>
                     <meta charset="UTF-8">
+                    <link rel="stylesheet" href="css/style.css">
                     <title>Editar Apartamento</title>
                 </head>
                 <body>
@@ -660,6 +667,7 @@ app.get("/cadastrarMoradores", function(req, res) {
                     <html lang="pt-BR">
                     <head>
                         <meta charset="UTF-8">
+                        <link rel="stylesheet" href="css/style.css">
                         <title>Cadastrar Morador</title>
                     </head>
                     <body>
@@ -746,6 +754,7 @@ app.get("/cadastrarMoradores", function(req, res) {
                 <html lang="pt-BR">
                 <head>
                     <meta charset="UTF-8">
+                    <link rel="stylesheet" href="css/style.css">
                     <title>Cadastrar Morador</title>
                 </head>
                 <body>
@@ -796,7 +805,7 @@ app.post('/cadastrarMoradores', function(req, res) {
             console.log("Não foi possível inserir os dados:", err);
             return res.send(`
                 <html>
-                <head><link rel="stylesheet" href="/style.css"></head>
+                <head><link rel="stylesheet" href="css/style.css"></head>
                 <body>
                     <h1>ERRO</h1>
                     <h2>Dados inseridos não estão conferindo.</h2>
@@ -880,6 +889,7 @@ app.get('/editarMoradores/:idMorador', function(req, res) {
                         <html lang="pt-BR">
                         <head>
                             <meta charset="UTF-8">
+                            <link rel="stylesheet" href="css/style.css">
                             <title>Editar Morador</title>
                         </head>
                         <body>
@@ -1040,6 +1050,7 @@ app.post("/pesquisarMoradores", function(req, res) {
                 <head>
                     <meta charset="UTF-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <link rel="stylesheet" href="css/style.css">
                     <title>Morador Não Encontrado</title>
                 </head>
                 <body>
@@ -1059,6 +1070,7 @@ app.post("/pesquisarMoradores", function(req, res) {
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <link rel="stylesheet" href="css/style.css">
                 <title>Detalhes do Bloco</title>
             </head>
             <body>
@@ -1085,17 +1097,17 @@ app.post("/pesquisarMoradores", function(req, res) {
     });
 });
 
-
 app.get("/pagamentos", function(req, res) {
+
     const blocoSelecionado = req.query.idbloco;
     const ApSelecionado = req.query.idApartamento;
-    const Mes = req.query.mesMostrado || String(new Date().getMonth() + 1).padStart(2, '0');
-    const Ano = req.query.anoMostrado || new Date().getFullYear();
+    const mes = req.query.mesMostrado || String(new Date().getMonth() + 1).padStart(2, '0');
+    const ano = req.query.anoMostrado || new Date().getFullYear();
 
     const mostrarMorador = "SELECT idMorador, cpfMorador, nomeMorador, idApartamento, telefoneMorador FROM Moradores WHERE idApartamento = ?";
     const mostrarBlocos = "SELECT idBloco, nomeBloco AS descricao FROM Blocos";
     const mostrarAp = "SELECT idApartamento, numeroDoAp AS numeroApartamento FROM Apartamentos WHERE idBloco = ?";
-    const referencia = "SELECT idReferencia, vencimento, valorFatura FROM Referencia WHERE MONTH(dataFatura) = ? AND YEAR(dataFatura) = ?";
+    const referencia = "SELECT idReferencia, vencimento, valor FROM Referencia WHERE MONTH(vencimento) = ? AND YEAR(vencimento) = ?";
 
     connection.query(mostrarBlocos, function(err, blocos) {
         if (err) return res.status(500).send("Erro ao buscar blocos");
@@ -1103,6 +1115,7 @@ app.get("/pagamentos", function(req, res) {
         if (!blocoSelecionado) {
             const blocosHtml = blocos.map(b => `<option value="${b.idBloco}">${b.descricao}</option>`).join("");
             return res.send(`
+                 <link rel="stylesheet" href="css/style.css">
                 <form method="GET" action="/pagamentos">
                     <label for="idbloco">Selecione o Bloco:</label>
                     <select name="idbloco" onchange="this.form.submit()">
@@ -1112,13 +1125,14 @@ app.get("/pagamentos", function(req, res) {
                 </form>
             `);
         }
-        
+
         connection.query(mostrarAp, [blocoSelecionado], function(err, apartamentos) {
             if (err) return res.status(500).send("Erro ao buscar apartamentos");
 
             const apartamentosHtml = apartamentos.map(ap => `<option value="${ap.idApartamento}">${ap.numeroApartamento}</option>`).join("");
             if (!ApSelecionado) {
                 return res.send(`
+                    <link rel="stylesheet" href="css/style.css">
                     <form method="GET" action="/pagamentos">
                         <input type="hidden" name="idbloco" value="${blocoSelecionado}">
                         <label for="idApartamento">Selecione o Apartamento:</label>
@@ -1129,23 +1143,23 @@ app.get("/pagamentos", function(req, res) {
                     </form>
                 `);
             }
-            
 
             connection.query(mostrarMorador, [ApSelecionado], function(err, moradorRows) {
                 if (err) return res.status(500).send("Erro ao buscar morador");
 
                 const morador = moradorRows.length > 0 ? moradorRows[0] : null;
 
-                connection.query(referencia, [Mes, Ano], function(err, reference) {
+                connection.query(referencia, [mes, ano], function(err, reference) {
                     if (err) return res.status(500).send("Erro ao buscar referências");
 
                     const referenciasHtml = reference.map(r => `
-                        <li>Vencimento: ${r.vencimento}, Valor: R$${r.valorFatura.toFixed(2)}</li>
+                        <li>Vencimento: ${r.vencimento}, Valor: R$${r.valor.toFixed(2)}</li>
                     `).join('');
 
                     res.send(`
                         <!DOCTYPE html>
                         <html lang="pt-BR">
+                        <link rel="stylesheet" href="css/style.css">
                         <head><meta charset="UTF-8"><title>Pagamento</title></head>
                         <body>
                             <h1>Pagamento do Morador</h1>
@@ -1156,10 +1170,18 @@ app.get("/pagamentos", function(req, res) {
                                 <p><strong>Apartamento:</strong> ${morador.idApartamento}</p>
                             ` : `<p>Morador não encontrado.</p>`}
 
-                            <h2>Referências de ${Mes}/${Ano}</h2>
+                            <h2>Referências de ${mes}/${ano}</h2>
                             <ul>${referenciasHtml}</ul>
 
-                            <a href="/pagamentos">Voltar</a>
+                            <form action="/registrarPagamento" method="POST">
+                                <input type="hidden" name="idApartamento" value="${ApSelecionado}">
+                                <input type="hidden" name="idMorador" value="${morador ? morador.idMorador : ''}">
+                                <input type="hidden" name="idBloco" value="${blocoSelecionado}">
+                                <input type="hidden" name="idReferencia" value="${reference.length > 0 ? reference[0].idReferencia : ''}">
+                                <input type="submit" value="Registrar Pagamentos">
+                            </form>
+
+                            <a href="/">Voltar</a>
                         </body>
                         </html>
                     `);
@@ -1170,10 +1192,14 @@ app.get("/pagamentos", function(req, res) {
 });
 
 app.post("/registrarPagamento", function(req, res) {
-    const { idApartamento, cpfMorador, nomeMorador, idBloco, idMorador, dataFatura, valorFatura, vencimento } = req.body;
+    const { idApartamento, idMorador, idBloco, idReferencia } = req.body;
 
-    const insert = "INSERT INTO Pagamento (idApartamento, cpfMorador, nomeMorador, idBloco, idMorador, dataFatura, valorFatura, vencimento) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    const values = [idApartamento, cpfMorador, nomeMorador, idBloco, idMorador, dataFatura, valorFatura, vencimento];
+    const insert = "INSERT INTO Pagamento (idApartamento, idMorador, idBloco, idReferencia) VALUES (?,?,?,?)";
+    const values = [idApartamento, idMorador, idBloco, idReferencia];
+
+    if (!idMorador || !idApartamento || !idBloco) {
+        return res.status(400).send("Erro: idMorador, idApartamento ou idBloco não pode estar vazio.");
+    }
 
     connection.query(insert, values, function(err) {
         if (err) {
@@ -1182,9 +1208,71 @@ app.post("/registrarPagamento", function(req, res) {
         }
 
         console.log("Pagamento registrado com sucesso!");
-        res.redirect("/pagamentos");
+        res.redirect("/");
     });
 });
+
+app.get("/cadastroManutencao", function(req, res) {
+    const mostrarTiposManutencao = "SELECT tipoDeManutencao FROM Manutencao GROUP BY tipoDeManutencao";
+
+    connection.query(mostrarTiposManutencao, function(err, tipos) {
+        if (err) {
+            return res.status(500).send("Erro ao buscar tipos de manutenção.");
+        }
+
+        const tiposHtml = tipos.map(tipo => `<option value="${tipo.tipoDeManutencao}">${tipo.tipoDeManutencao}</option>`).join("");
+
+        res.send(`
+            <!DOCTYPE html>
+            <html lang="pt-BR">
+            <head><meta charset="UTF-8"><title>Cadastrar Manutenção</title></head>
+            <link rel="stylesheet" href="css/style.css">
+            <body>
+                <h1>Cadastro de Manutenção</h1>
+                <form method="POST" action="/registrarManutencao">
+                    <label for="tipoManutencao">Tipo de Manutenção:</label>
+                    <select name="tipoManutencao" id="tipoManutencao" required>
+                        <option value="">Selecione o Tipo</option>
+                        ${tiposHtml}
+                    </select>
+
+                    <label for="dataManutencao">Data:</label>
+                    <input type="date" name="dataManutencao" id="dataManutencao" required>
+
+                    <label for="localManutencao">Local:</label>
+                    <input type="text" name="localManutencao" id="localManutencao" required>
+
+                    <label for="descManutencao">Descrição:</label>
+                    <input type="text" name="descManutencao" id="descManutencao" required>
+
+                    <button type="submit">Cadastrar</button>
+                </form>
+                <a href="/">Voltar</a>
+            </body>
+            </html>
+        `);
+    });
+});
+
+
+app.post("/registrarManutencao", function(req, res) {
+    const { tipoManutencao, dataManutencao, localManutencao,descManutencao  } = req.body;
+
+    
+    const insert = "INSERT INTO Manutencao (tipoDeManutencao, dataDaManutencao, localDaManutencao, descManutencao) VALUES (?, ?, ?, ?)";
+    const values = [tipoManutencao, dataManutencao, localManutencao, descManutencao];
+
+    connection.query(insert, values, function(err) {
+        if (err) {
+            console.log("Erro ao registrar manutenção:", err);
+            return res.status(500).send("Erro ao registrar manutenção.");
+        }
+
+        console.log("Manutenção registrada com sucesso!");
+        res.redirect("/");  
+    });
+});
+
 
 
 
