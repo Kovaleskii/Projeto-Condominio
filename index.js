@@ -7,12 +7,17 @@ const { connect } = require('http2');
 
 // configurando a conexão com o banco de dados
 const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'root',
-    database: 'condominio', 
-    port: 3306
+    host: 'servidorjonathan.database.windows.net',
+    user: 'root@',
+    password: 'Cedup@2025',
+    database: 'Condominio', 
+    port: 3306,
+    ssl: sslOptions // opções de segurança
 });
+
+const sslOptions = {
+    ca:fs.readFileSync('./BaltimoreCyberTrustRoot.crt.pem'), // Caminho para o certificado CA
+}
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
